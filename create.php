@@ -101,20 +101,26 @@ session_start();
         }
 
 
-        // 6- Si le tableau d'erreur contient au moins une erreur,
+        // 6- Si le tableau d'erreurs contient au moins une erreur,
         if ( count($errors) > 0 ) 
         {
             // Sauvegarder ces messages d'erreur en session
+            $_SESSION['form_errors'] = $errors;
+            
             // Sauvegarder les anciennes données provenant du formulaire en session
+            $_SESSION['old'] = $postClean;
 
             // Effectuer une redirection vers la page de la laquelle proviennent les informations puis arrêter l'exécution du script
             return header("Location: " . $_SERVER['HTTP_REFERER']);
         }
 
-        var_dump("cool"); die();
         // 7- Dans le cas contraire,
             
         // 8- Arrondir la note à un chiffre après la virgule
+        if ( isset($postClean['review']) && $postClean['review'] !== "" ) 
+        {
+            $reviewRounded = round($postClean['review'], 1);
+        }
 
         // 9- Etablir une connexion avec la base de données
 
@@ -136,29 +142,43 @@ session_start();
 
         <main class="container">
             <h1 class="text-center my-3 display-5">Nouveau film</h1>
-
+            
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 mx-auto">
+
+                        <?php if(isset($_SESSION['form_errors']) && !empty($_SESSION['form_errors'])) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    <?php foreach($_SESSION['form_errors'] as $error) : ?>
+                                        <li><?php echo $error; ?></li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </div>
+                            <?php unset($_SESSION['form_errors']); ?>
+                        <?php endif ?>
+
                         <form method="POST">
                             <div class="mb-3">
                                 <label for="name">Nom du film <span class="text-danger fs-4">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control" autofocus>
+                                <input type="text" name="name" id="name" class="form-control" autofocus value="<?php echo isset($_SESSION['old']['name']) ? $_SESSION['old']['name'] : ""; unset($_SESSION['old']['name']); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="actors">Nom du/des acteurs <span class="text-danger fs-4">*</span></label>
-                                <input type="text" name="actors" id="actors" class="form-control">
+                                <input type="text" name="actors" id="actors" class="form-control" value="<?php echo isset($_SESSION['old']['actors']) ? $_SESSION['old']['actors'] : ""; unset($_SESSION['old']['actors']); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="review">La note / 5</label>
-                                <input type="number" step="0.1" min="0" max="5" name="review" id="review" class="form-control">
+                                <input type="number" step="0.1" min="0" max="5" name="review" id="review" class="form-control" value="<?php echo isset($_SESSION['old']['review']) ? $_SESSION['old']['review'] : ""; unset($_SESSION['old']['review']); ?>">
+                                <small><em>La note doit être comprise entre 0 et 5.</em></small>
                             </div>
                             <div class="mb-3">
                                 <label for="comment">Laissez un commentaire</label>
-                                <textarea name="comment" id="comment" class="form-control" rows="4"></textarea>
+                                <textarea name="comment" id="comment" class="form-control" rows="4"><?php echo isset($_SESSION['old']['comment']) ? $_SESSION['old']['comment'] : ""; unset($_SESSION['old']['comment']); ?></textarea>
+                                <small><em>Le commentaire ne doit pas dépasser 1000 caractères.</em></small>
                             </div>
                             <div>
-                                <input type="submit" value="Créer" class="btn btn-primary shadow">
+                                <input formnovalidate type="submit" value="Créer" class="btn btn-primary shadow">
                             </div>
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <input type="hidden" name="honeypot" value="">
