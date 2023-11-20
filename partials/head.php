@@ -9,7 +9,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Titre de la page affiché dans l'onglet -->
-        <title>Document</title>
+        <?php if( isset($title) && !empty($title) ) : ?>
+            <title><?php echo $title; ?> - Cinema</title>
+        <?php endif ?>
 
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
@@ -26,14 +28,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
 
         <!-- Seo (Référencement naturel) -->
-        <meta name="keywords" content="">
-        <meta name="description" content="">
+        <?php if( isset($keywords) && !empty($keywords) ) : ?>
+            <meta name="keywords" content="<?php echo $keywords; ?>">
+        <?php endif ?>
+
+        <?php if( isset($description) && !empty($description) ) : ?>
+            <meta name="description" content="<?php echo $description; ?>">
+        <?php endif ?>
+
         <meta name="robots" content="index, follow">
         <meta name="author" content="dwwm-mexico">
         <meta name="publisher" content="dwwm-mexico">
 
-        <!-- Font awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <?php if( isset($font_awesome) && !empty($font_awesome) ) : ?>
+            <!-- Font awesome -->
+            <?php echo $font_awesome; ?>
+        <?php endif ?>
 
         <!-- Bootstrap 5 Links -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">

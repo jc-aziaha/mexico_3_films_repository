@@ -17,7 +17,17 @@ session_start();
 
     // Générer le token.
     $_SESSION['csrf_token'] = bin2hex(random_bytes(30));
+?>
+<?php
+    $title = "Liste des films";
 
+    $description = "Consultez la liste des films que j'aime bien.";
+
+    $keywords = "dwwm, mexico, php, cinema, films, series";
+
+    $font_awesome = <<<HTML
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+HTML;
 ?>
 <?php include __DIR__ . "/partials/head.php"; ?>
 
@@ -31,6 +41,8 @@ session_start();
                 <a href="create.php" class="btn btn-primary shadow">Nouveau film</a>
             </div>
             
+
+            <?php if(count($films) > 0) : ?>
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-lg-5 mx-auto">
@@ -85,6 +97,9 @@ session_start();
                     </div>
                 </div>
             </div>
+            <?php else : ?>
+                <p class="text-center mt-5">Aucun film ajouté à la liste pour l'instant.</p>
+            <?php endif ?>
         </main>
 
         <?php include __DIR__ . "/partials/footer.php"; ?>

@@ -190,7 +190,13 @@ session_start();
     // Générons le token
     $_SESSION['csrf_token'] = bin2hex(random_bytes(30));
 ?>
-<!-- Partie Vue -->
+<?php
+    $title = "Modifier ce film";
+
+    $description = "Modifier ce film.";
+
+    $keywords = "dwwm, mexico, php, cinema, films, series, modifier";
+?>
 <?php include __DIR__ . "/partials/head.php"; ?>
 
     <?php include __DIR__ . "/partials/nav.php"; ?>
