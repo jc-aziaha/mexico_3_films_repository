@@ -14,7 +14,19 @@ body
     grid-template-rows: auto 1fr auto;
 }
 
-nav a, footer p
+nav a
 {
     font-family: 'Pacifico', cursive;
+}
+
+.card
+{
+    border-radius: 15px;
+    transition: 1s;
+}
+
+.card:hover
+{
+    transform: scale(1.1);
+    transition: 1s;
 }

@@ -16,7 +16,7 @@
     catch (\PDOException $e)  // Dans le cas contraire, capturons l'erreur sous forme d'exception
     {
         // Affichons le message d'erreur puis arrêtons l'exécution du script.
-        die("Erreur de connexion à la base de données" . $e->getMessage());
+        die("Erreur de connexion à la base de données: " . $e->getMessage());
     }
 
 ?>

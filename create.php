@@ -123,12 +123,31 @@ session_start();
         }
 
         // 9- Etablir une connexion avec la base de données
+        require __DIR__ . "/db/connexion.php";
 
         // 10- Effectuer la requête d'insertion du nouveau film dans la table des films de la base de données.
-        
+
+            // 10-a) On prepare la requête
+        $req = $db->prepare("INSERT INTO film (name, actors, review, comment, created_at, updated_at) VALUES (:name, :actors, :review, :comment, now(), now() ) ");
+
+            // 10-b) On initialise les valeurs
+        $req->bindValue(":name", $postClean['name']);
+        $req->bindValue(":actors", $postClean['actors']);
+        $req->bindValue(":review", isset($reviewRounded) ? $reviewRounded : "");
+        $req->bindValue(":comment", $postClean['comment']);
+
+            // 10-c) On execute la requête
+        $req->execute();
+
+            // 10-d) On ferme le curseur (Non obligatoire.)
+        $req->closeCursor();
+
+
         // 11- Générer un message flash de succès
+        $_SESSION['success'] = "Le film a été ajouté à la liste.";
 
         // 12- Effectuer une redirection vers la page d'accueil puis arrêter l'exécution du script.
+        return header("Location: index.php");
 
     }
 
