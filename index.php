@@ -15,6 +15,9 @@ session_start();
         // 2-c) Récupérer tous les films.
     $films = $req->fetchAll();
 
+    // Générer le token.
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(30));
+
 ?>
 <?php include __DIR__ . "/partials/head.php"; ?>
 
@@ -23,21 +26,23 @@ session_start();
         <main class="container">
             <h1 class="text-center my-3 display-5">Liste des films</h1>
 
-            <?php if( isset($_SESSION['success']) && !empty($_SESSION['success']) ) : ?>
-                <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo $_SESSION['success']; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php unset($_SESSION['success']); ?>
-            <?php endif ?>
-
+            
             <div class="d-flex justify-content-end align-items-center">
                 <a href="create.php" class="btn btn-primary shadow">Nouveau film</a>
             </div>
-
+            
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-lg-5 mx-auto">
+
+                        <?php if( isset($_SESSION['success']) && !empty($_SESSION['success']) ) : ?>
+                            <div class="text-center alert alert-success alert-dismissible fade show my-3" role="alert">
+                                <?php echo $_SESSION['success']; ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                            <?php unset($_SESSION['success']); ?>
+                        <?php endif ?>
+
                         <?php foreach($films as $film) : ?>
                             <div class="card shadow my-3">
                                 <div class="card-body">
@@ -45,10 +50,14 @@ session_start();
                                     <p class="card-text"><strong>Acteur(s)</strong>: <?php echo $film['actors']; ?></p>
                                     <hr>
                                     <a title="Les détails du film : <?php echo $film['name']; ?>" data-bs-toggle="modal" data-bs-target="#modal_<?php echo $film['id']; ?>" href="" class="text-dark mx-3"><i class="fa-solid fa-eye"></i></a>
-
-                                    
-                                    <a href="" class="text-secondary mx-3"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="" class="text-danger mx-3"><i class="fa-solid fa-trash-can"></i></a>
+                                    <a title="Modifier le film: <?php echo $film['name']; ?>" href="edit.php?film_id=<?php echo $film['id']; ?>" class="text-secondary mx-3"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a onclick="event.preventDefault(); return confirm('Confirmer la suppression?') && document.querySelector('#delete_film_<?php echo $film['id']; ?>').submit();" title="Supprimer le film: <?php echo $film['name']; ?>" href="" class="text-danger mx-3"><i class="fa-solid fa-trash-can"></i></a>
+                                    <form action="delete.php" method="POST" id="delete_film_<?php echo $film['id']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="honeypot" value="">
+                                        <input type="hidden" name="film_id" value="<?php echo $film['id'] ?>">
+                                    </form>
                                 </div>
                             </div>
 
@@ -63,7 +72,7 @@ session_start();
                                         <div class="modal-body">
                                             <p><strong>Acteurs</strong>: <?php echo $film['name']; ?></p>
                                             <p><strong>Note</strong>: <?php echo $film['review'] != "" ? $film['review'] : "Non renseignée."; ?></p>
-                                            <p><strong>Commentaire</strong>: <?php echo $film['comment'] != "" ? $film['comment'] : "Non renseigné."; ?></p>
+                                            <p><strong>Commentaire</strong>: <?php echo $film['comment'] != "" ? nl2br($film['comment']) : "Non renseigné."; ?></p>
                                             
                                         </div>
                                         <div class="modal-footer">
