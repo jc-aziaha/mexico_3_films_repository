@@ -168,9 +168,9 @@ session_start();
         <main class="container">
             <h1 class="text-center my-3 display-5">Nouveau film</h1>
             
-            <div class="container">
+            <div class="container mb-5">
                 <div class="row">
-                    <div class="col-md-5 mx-auto">
+                    <div class="col-md-8 col-lg-5 mx-auto p-4 shadow bg-white">
 
                         <?php if(isset($_SESSION['form_errors']) && !empty($_SESSION['form_errors'])) : ?>
                             <div class="alert alert-danger" role="alert">

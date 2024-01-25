@@ -206,7 +206,7 @@ session_start();
             
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5 mx-auto">
+                    <div class="col-md-8 col-lg-5 mx-auto p-4 shadow bg-white">
 
                         <?php if(isset($_SESSION['form_errors']) && !empty($_SESSION['form_errors'])) : ?>
                             <div class="alert alert-danger" role="alert">

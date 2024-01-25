@@ -43,7 +43,7 @@ HTML;
             
 
             <?php if(count($films) > 0) : ?>
-            <div class="container">
+            <div class="container mb-3">
                 <div class="row">
                     <div class="col-md-8 col-lg-5 mx-auto">
 
@@ -82,7 +82,7 @@ HTML;
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p><strong>Acteurs</strong>: <?php echo $film['name']; ?></p>
+                                            <p><strong>Acteurs</strong>: <?php echo $film['actors']; ?></p>
                                             <p><strong>Note</strong>: <?php echo $film['review'] != "" ? $film['review'] : "Non renseignée."; ?></p>
                                             <p><strong>Commentaire</strong>: <?php echo $film['comment'] != "" ? nl2br($film['comment']) : "Non renseigné."; ?></p>
                                             

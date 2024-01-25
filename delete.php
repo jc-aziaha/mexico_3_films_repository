@@ -9,7 +9,7 @@ session_start();
     }
     
     
-    // 2- Dans le cas contraire, 
+    // 2- Dans le cas contraire,
     // Si la méthode HTTP "DELETE" n'a pas été précisée dans le formalaire,
     if ( !isset($_POST['_method']) || $_POST['_method'] !== "DELETE" ) 
     {
@@ -70,6 +70,8 @@ session_start();
     $deleteRequest = $db->prepare("DELETE FROM film WHERE id=:id");
     $deleteRequest->bindValue(":id", $film['id']);
     $deleteRequest->execute();
+
+    $deleteRequest->closeCursor(); // optionnel
 
     // 11- Générer le message flash
     $_SESSION['success'] = "<strong><em>$film[name]</em></strong> a été retiré de la liste.";

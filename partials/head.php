@@ -21,16 +21,18 @@
         <link rel="mask-icon" href="assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
-
+        
         <!-- Google font -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
-
+        
         <!-- Seo (Référencement naturel) -->
+        <meta name="theme-color" content="#ffffff">
+        
         <?php if( isset($keywords) && !empty($keywords) ) : ?>
             <meta name="keywords" content="<?php echo $keywords; ?>">
-        <?php endif ?>
+            <?php endif ?>
 
         <?php if( isset($description) && !empty($description) ) : ?>
             <meta name="description" content="<?php echo $description; ?>">

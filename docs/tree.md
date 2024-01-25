@@ -6,15 +6,15 @@ films_repository/
 │   │   └── favicon/
 │   └── styles/
 │       └── app.css
+├── db/
+│   ├── connection.php
+│   └── film.sql (optionnel)
 ├── partials/
 │   ├── foot.php
 │   ├── footer.php
 │   ├── head.php
 │   └── nav.php
-├── db/
-│   ├── connection.php
-│   └── film.sql (optionnel)
-├── utils/ (optionnel)
+├── docs/ (optionnel)
 │   ├── favicon_origins.png
 │   └── tree.txt
 ├── create.php
